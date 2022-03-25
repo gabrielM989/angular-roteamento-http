@@ -39,7 +39,10 @@ export class NewProductComponent implements OnInit {
       this.prodApiService.createProduct(product).subscribe(
         () =>{ /* função de sucesso */
           /* this.router.navigateByUrl('/home') */ /* para direcionar à pasta home */
-          this.router.navigateByUrl(`/product/${this.productForm.get('name')?.value}`) /* para direcionar ao produto criado */
+
+          let product = this.productForm.get('name')?.value /* Essas 3 linhas são para fazer o reset, não mostrando a mensagem que não foi alterado */
+          this.productForm.reset()
+          this.router.navigateByUrl(`/product/${product}`) /* para direcionar ao produto criado */
         },
         (erros) =>{ /* função de erro */
           this.snack.open('Houve um erro ao salvar o produto, Foi mal!!', 'OK')
@@ -54,5 +57,14 @@ export class NewProductComponent implements OnInit {
     }
 
   }
+
+  canDeactivate(){
+
+     if(this.productForm.dirty) {  /* dirty vê se o formulário está sujo, se tem algo nele */
+        return confirm('Os dados não foram salvos. Deseja realmente sair ?')
+      }
+
+      return true
+     }
 
 }

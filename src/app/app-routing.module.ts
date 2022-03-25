@@ -8,6 +8,9 @@ import { ProductComponent } from './pages/product/product.component'
 import { NewProductComponent } from './pages/new-product/new-product.component'
 import { ProductsComponent } from './pages/products/products.component'
 import { UpdateProductComponent } from './pages/update-product/update-product.component'
+import { FormVerificationGuard } from './guards/guards/form-verification.guard'
+import { AuthVerificationGuard } from './guards/auth-verification.guard'
+import { ChildAuthVerificationGuard } from './guards/child-auth-verification.guard'
 
 const routes: Routes = [
     {
@@ -24,11 +27,20 @@ const routes: Routes = [
             path: ':name', /* declaramos a nossa rota filha */
             component: ProductComponent
             }
+        ],
+        canActivateChild: [ /* permite ou não entrar na rota filha de uma rota */
+            ChildAuthVerificationGuard
         ]
     },
     {
         path: 'new', /* nova rota, para o new-product */
-        component: NewProductComponent
+        component: NewProductComponent,
+        canDeactivate: [ /* Para usar o guards!!! */
+            FormVerificationGuard
+        ],
+        canActivate: [
+            AuthVerificationGuard
+        ]
     },
   
     {
@@ -43,7 +55,13 @@ const routes: Routes = [
     },
     {
         path: 'update',
-        component: UpdateProductComponent
+        component: UpdateProductComponent,
+        canDeactivate: [ /* Para usar o guards!!! */
+            FormVerificationGuard
+        ],
+        canActivate: [
+            AuthVerificationGuard
+        ]
     },
 
     {

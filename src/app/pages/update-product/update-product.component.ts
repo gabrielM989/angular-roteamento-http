@@ -22,10 +22,9 @@ export class UpdateProductComponent implements OnInit {
 
   })
 
-
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, /* permite acessar os dados que são passados pela rota */
     private router: Router,
     private snack: MatSnackBar,
     private prodApiService: ProductsApiService
@@ -34,9 +33,11 @@ export class UpdateProductComponent implements OnInit {
   ngOnInit(): void {
     this.productId = parseInt(this.route.snapshot.queryParamMap.get('id') || '') 
 
-    let name = this.route.snapshot.queryParamMap.get('name')
+    let name = this.route.snapshot.queryParamMap.get('name') /* o snapshot é apenas do "momento" não fica atualizando as informações */
     let price = this.route.snapshot.queryParamMap.get('price')
     let picture = this.route.snapshot.queryParamMap.get('picture')
+
+    // this.route.queryParamMap.subscribe --> outra opção, ao invés do snapshot
 
     this.productForm.get('name')?.setValue(name)
     this.productForm.get('price')?.setValue(price)
@@ -54,6 +55,7 @@ export class UpdateProductComponent implements OnInit {
       this.prodApiService.updateProduct(product).subscribe(
         () =>{ /* função de sucesso */
           /* this.router.navigateByUrl('/home') */ /* para direcionar à pasta home */
+          
           this.router.navigateByUrl(`/product/${this.productForm.get('name')?.value}`) /* para direcionar ao produto criado */
         },
         (erros) =>{ /* função de erro */
@@ -69,4 +71,14 @@ export class UpdateProductComponent implements OnInit {
     }
 
   }
+
+  canDeactivate(){
+
+    if(this.productForm.dirty) {  /* dirty vê se o formulário está sujo, se tem algo nele */
+       return confirm('Os dados não foram salvos. Deseja realmente sair ?')
+     }
+
+     return true
+    }
+
 }
