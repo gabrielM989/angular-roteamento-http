@@ -1,0 +1,19 @@
+<div class="container">
+    <form action="#" id="main-form" [formGroup]="productForm" (ngSubmit)="saveProduct()">
+        <mat-form-field appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Preço</mat-label>
+            <input type="number" matInput formControlName="price">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Foto do produto</mat-label>
+            <input type="url" matInput formControlName="picture">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">
+            Salvar
+        </button>
+    </form>
+</div>

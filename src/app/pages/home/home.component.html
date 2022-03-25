@@ -4,6 +4,11 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        flex-direction: column;
+    }
+    a{
+        text-decoration: none;
+        
     }
 </style>
 
@@ -13,8 +18,15 @@
         <input type="text" 
         matInput
         [(ngModel)]="productName" 
-        (keyup.enter)="findProduct()">
+        (keyup.enter)="findProduct()"
+        (input)="search()"
+        >
 
     </mat-form-field>
 
+    <a routerLink="/new">Crie um novo produto</a>
+    <a routerLink="/products">Ver produtos</a>
+
 </div>
+
+<router-outlet></router-outlet><!-- Para mostrar os componentes das rotas filhas -->

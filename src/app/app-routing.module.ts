@@ -1,26 +1,55 @@
-import { NgModule } from '@angular/core'
+import { Component, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule, Routes } from '@angular/router'
 import { HomeComponent } from './pages/home/home.component'
 import { LoginComponent } from './pages/login/login.component'
 import { ErrorComponent } from './pages/error/error.component'
 import { ProductComponent } from './pages/product/product.component'
+import { NewProductComponent } from './pages/new-product/new-product.component'
+import { ProductsComponent } from './pages/products/products.component'
+import { UpdateProductComponent } from './pages/update-product/update-product.component'
 
 const routes: Routes = [
     {
         path: '', /* qual é o caminho que preciso percorrer, para acessar a minha rota, string vazia quer dizer que é a rota principal */
         pathMatch: 'full', /* Estamos dizendo que para entrar nessa rota, a string precisa ser totalmente vazia */
-        component: HomeComponent /* Definindo em qual componente a rota irá atuar */
+        redirectTo: '/home'
+        
     },
     {
-        path: 'login',
-        pathMatch: 'full',
-        component: LoginComponent
+        path: 'home', /* Precisamos direcionar para a home, pq o path, na rota inicial está vazio */
+        component: HomeComponent,
+        children: [ /* As subrotas das rotas pais - elas possuem as mesmas propriedades das rotas pais */
+            {
+            path: ':name', /* declaramos a nossa rota filha */
+            component: ProductComponent
+            }
+        ]
     },
+    {
+        path: 'new', /* nova rota, para o new-product */
+        component: NewProductComponent
+    },
+  
     {
         path: 'product/:name', /* Criação rotas com parâmetros */
         component: ProductComponent
 
+    },
+    {
+        path: 'products',
+        component: ProductsComponent
+
+    },
+    {
+        path: 'update',
+        component: UpdateProductComponent
+    },
+
+    {
+        path: 'login',
+        pathMatch: 'full',
+        component: LoginComponent/* Definindo em qual componente a rota irá atuar */
     },
     {
         path: '**', /* É a rota coringa, caso o usuário tente acessar uma página que não exista */

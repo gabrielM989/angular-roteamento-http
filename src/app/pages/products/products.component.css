@@ -1,0 +1,15 @@
+.container{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    grid-auto-rows: min-content;
+    gap: 20px; /* Afastamento entre as linhas/colunas */
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.card img{
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}

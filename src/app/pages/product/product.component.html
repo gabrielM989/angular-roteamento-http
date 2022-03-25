@@ -7,17 +7,22 @@
     }
 
     .card{
-        width: 500px;
+        width: fit-content; /* fit-content pega a largura necessária */
     }
     a{
         color: white;
+    }
+    .card-img{
+        
+       max-height: 400px;
+
     }
 </style>
 
 
 <div class="container" *ngIf="prod != undefined" >
 <mat-card class="card" >
-    <img [src]="prod.picture" mat-card-image>
+    <img [src]="prod.picture" mat-card-image class="card-img">
   
     <mat-card-header>
       <mat-card-title>{{ prod.name }}</mat-card-title>
@@ -25,8 +30,16 @@
     </mat-card-header>
 
     <mat-card-actions>
-        <button mat-raised-button color="accent" routerLink="/">
+        <button mat-raised-button color="primary" routerLink="/" matTooltip="Voltar à página inicial">
         <mat-icon>arrow_left</mat-icon>
+        </button>
+
+        <button mat-raised-button color="warn" matTooltip="Deletar Produto" matTooltipPosition="right" (click)="delete(prod.id || 0)">
+            <mat-icon>delete</mat-icon>
+        </button>
+
+        <button mat-raised-button color="accent" matTooltip="Editar Produto" (click)="edit()" >
+            <mat-icon>edit</mat-icon>
         </button>
     </mat-card-actions>
   </mat-card>

@@ -27,4 +27,19 @@ export class ProductsApiService {
       })
     )
   }
+
+  createProduct(p: Product): Observable<any> {
+    return this.http.post<any>(this.baseUrl, p)
+
+  }
+
+  deleteProduct(id: number): Observable<any>{
+    return this.http.delete<any>(`${this.baseUrl}/${id}`)
+
+  }
+
+  updateProduct(p: Product): Observable<any>{
+    return this.http.put(`${this.baseUrl}/${p.id}`, p )
+  }
+
 }
